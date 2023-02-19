@@ -1,0 +1,11 @@
+<h1>Games#score</h1>
+<p>Find me in app/views/games/score.html.erb</p>
+<%# <% query = params[:query] %>
+<% @letters = params[:letters].split(",")%>
+<% @word = params[:query] %>
+<% if @word.chars.all? { |c| @letters.include?(c) } %>
+  <p>All letters in word are present in the letters array.</p>
+<% else %>
+  <p>Sorry but <strong> <%= @word %></strong> deos not seem to be a valid English word.</p>
+<% end %>
+<div><button><a href="/new"> Play again</a></button></div>
