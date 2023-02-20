@@ -2,8 +2,6 @@ require 'open-uri'
 require 'json'
 
 class GamesController < ApplicationController
-  VOWELS = %w(A E I O U)
-
   def new
     # build the letter
     @letters = Array.new(10) { ('a'..'z').to_a[rand(26)] }
@@ -14,24 +12,21 @@ class GamesController < ApplicationController
     # retrieve game data from form
     # @letters = params [:letter].split('')
 
-      @letters = params[:letters].split
-      @word = (params[:word] || "").upcase
-      @included = included?(@word, @letters)
-      @english_word = english_word?(@word)
+    @letters = params[:letters].split
+    @word = (params[:word] || "").upcase
+    @included = included?(@word, @letters)
+    @english_word = english_word?(@word)
   end
 
-    private
+  # private
 
-    def included?(word, letters)
-      word.chars.all? { |letter| word.count(letter) <= letters.count(letter) }
-    end
+  def included?(word, letters)
+    word.chars.all? { |letter| word.count(letter) <= letters.count(letter) }
+  end
 
-    def english_word?(word)
-      response = URI.open("https://wagon-dictionary.herokuapp.com/#{word}")
-      json = JSON.parse(response.read)
-      json['found']
-    end
-  
-  #  generate_letters(letter_size)
-  # end
+  def english_word?(word)
+    response = URI.open("https://wagon-dictionary.herokuapp.com/#{word}")
+    json = JSON.parse(response.read)
+    json['found']
+  end
 end
